@@ -33,8 +33,9 @@
 #include "app_wifi.h"
 #include "app_storage.h"
 #include "app_priv.h"
+#include "esp_pm.h"
 
-static const char *TAG = "rainmaker";
+static const char *TAG = "performance_optimize";
 
 esp_rmaker_device_t *light_device;
 
@@ -74,7 +75,7 @@ static esp_err_t write_cb(const esp_rmaker_device_t *device, const esp_rmaker_pa
 }
 
 void app_main()
-{
+{    
     int i = 0;
     esp_err_t err = ESP_OK;
     ESP_LOGE(TAG, "app_main");
@@ -84,7 +85,12 @@ void app_main()
      */
     ESP_LOGI(TAG, "NVS Flash initialization");
     app_storage_init();
-    
+
+    /**
+     * @brief Power Manager initialization
+     */
+    app_pm_init();
+
     /**
      * @brief Application driver initialization
      */
@@ -124,7 +130,7 @@ void app_main()
     esp_rmaker_ota_config_t ota_config = {
         .server_cert = ota_server_cert,
     };
-    esp_rmaker_ota_enable(&ota_config, OTA_USING_TOPICS); //OTA_USING_PARAMS		
+    esp_rmaker_ota_enable(&ota_config, OTA_USING_TOPICS);
 
     /* Enable timezone service which will be require for setting appropriate timezone
      * from the phone apps for scheduling to work correctly.
@@ -153,6 +159,7 @@ void app_main()
 
     while (1) {
         ESP_LOGI(TAG, "[%02d] Hello world!", i++);
+        // esp_pm_dump_locks(stdout);
         vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }

@@ -99,11 +99,15 @@ bool app_driver_get_state(void)
 esp_err_t app_light_set_power(bool power)
 {
     if (power) {
+        // PM Lock
+        app_pm_lock_acquire();
         // light on
         light_driver_set_switch(true);
     } else {
         // light off
         light_driver_set_switch(false);
+        // PM UnLock
+        app_pm_lock_release();
     }
     return ESP_OK;
 }

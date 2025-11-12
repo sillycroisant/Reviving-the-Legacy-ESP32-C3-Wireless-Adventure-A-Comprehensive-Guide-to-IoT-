@@ -84,4 +84,25 @@ esp_err_t app_light_set_hue(uint16_t hue);
  */
 esp_err_t app_light_set_saturation(uint16_t saturation);
 
+/**
+ * @brief 
+ * 
+ * @return esp_err_t 
+ */
+esp_err_t app_pm_init();
+
+/**
+ * @brief 
+ * 
+ * @return esp_err_t 
+ */
+esp_err_t app_pm_lock_acquire();
+
+/**
+ * @brief 
+ * 
+ * @return esp_err_t 
+ */
+esp_err_t app_pm_lock_release();
+
 #endif /**< __APP_PRIVATE_H__ */

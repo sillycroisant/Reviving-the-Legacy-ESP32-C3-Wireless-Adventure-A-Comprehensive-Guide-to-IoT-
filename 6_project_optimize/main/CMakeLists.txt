@@ -1,4 +1,5 @@
 set(srcs "app_main.c"
+                    "app_pm.c"
                     "app_driver.c")
 set(include_dirs "include")
 set(DEVELOPMENT_BOARD "board_esp32c3_devkitc.h")
